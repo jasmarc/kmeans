@@ -5,15 +5,24 @@ require "coordinate"
 
 class TestCluster < Test::Unit::TestCase
   def test_basics
-    element = Coordinate.new([0, 0])
-    element.data = "jason"
-    cluster = Cluster.new(element)
+    element = Coordinate.new([0, 0])      # create a new Coordinate
+    element.data = "jason"                # set its data
+    cluster = Cluster.new(element)        # create a new Cluster with that element
+
+    # assert that there is one element in the cluster
     assert(cluster.elements.size == 1, "cluster has one element")
+
+    # and that the distance between the clusters centroid
+    # and that element is zero
     assert_equal(0, cluster.distance_to(element))
-    element2 = Coordinate.new([3, 4])
-    element2.data = "some other data"
-    cluster.add(element2)
-    cluster.recalculate_centroid
+
+    element2 = Coordinate.new([3, 4])     # create a second element
+    element2.data = "some other data"     # set its data
+    cluster.add(element2)                 # add it to the cluster
+    cluster.recalculate_centroid          # recalculate the cluster's centroid
+
+    # assert that the distance between element one and the cluster's new
+    # centroid is now 2.5
     assert_equal(2.5, cluster.distance_to(element))
     cluster.elements.each do |element|
       puts element.to_s + "\t" + element.data
